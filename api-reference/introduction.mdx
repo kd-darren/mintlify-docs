@@ -15,3 +15,61 @@ All API endpoints are authenticated using Bearer tokens and retrieve it from the
 ```json
 {"Authorization": "Bearer <token>"}
 ```
+
+## Construct the signature string
+
+We hope that the merchant's technical developers will construct the signature string according to the rules agreed upon in the current documentation. The platform will construct the signature string in the same way. If the merchant constructs the signature string incorrectly, it will result in signature verification failure. Below is the explanation of the specific format of the signature string. The signature JSON string has two attributes:
+
+```json
+{
+    "secret": "Your OpenAPI secret key.",
+    "timestamp": "Timestamp, the number of milliseconds since 1970."
+}
+```
+
+Please obtain the current system timestamp when initiating the request, which is the total number of seconds elapsed since 00:00:00 on January 1, 1970, Greenwich Mean Time (08:00:00 Beijing Time on January 1, 1970) to the present, as the request timestamp. The platform will refuse to process requests made a long time ago, so merchants should ensure their system time is accurate.
+
+## Calculate the signature value.
+
+After obtaining the signature JSON string, convert it to byte data, then use Base64 encoding to get the signature value.
+
+## Here is an example of Java code to generate a signature
+
+``` java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
+import java.nio.charset.StandardCharsets;
+
+public class SignatureGenerator {
+
+    public static String generateSignature(String secretKey, String message) throws Exception {
+        // Create a SecretKeySpec object using the secret key and the desired algorithm (HMAC SHA256 in this example)
+        SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+
+        // Create a Mac instance and initialize it with the secret key
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(signingKey);
+
+        // Compute the HMAC on the input message
+        byte[] rawHmac = mac.doFinal(message.getBytes(StandardCharsets.UTF_8));
+
+        // Encode to base64
+        return Base64.getEncoder().encodeToString(rawHmac);
+    }
+
+    public static void main(String[] args) {
+        try {
+            String secretKey = "your_secret_key";
+            String message = "{\"timestamp\":1617187200,\"authKey\":\"your_auth_key\"}"; // Replace with your actual JSON string
+
+            String signature = generateSignature(secretKey, message);
+            System.out.println("Signature: " + signature);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+Please replace "your_secret_key" and the message variable with your actual secret key and the JSON string. This example uses HMAC SHA256 for generating the signature. Ensure that the secret key and algorithm match those required by your API documentation.
