@@ -36,40 +36,33 @@ After obtaining the signature JSON string, convert it to byte data, then use Bas
 ## Here is an example of Java code to generate a signature
 
 ``` java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.util.Base64;
-import java.nio.charset.StandardCharsets;
+import com.alibaba.fastjson2.JSONObject;
+import org.junit.Test;
+import org.springframework.util.Base64Utils;
 
-public class SignatureGenerator {
+public class OpenApiTest {
 
-    public static String generateSignature(String secretKey, String message) throws Exception {
-        // Create a SecretKeySpec object using the secret key and the desired algorithm (HMAC SHA256 in this example)
-        SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+    @Test
+    public void getSign() {
+        // Construct the signature JSON format content
+        JSONObject signContent = new JSONObject();
+        signContent.put("secret", "your_secret_key"); // Your authorization key
+        signContent.put("timestamp", System.currentTimeMillis()); // Timestamp, the number of milliseconds since 1970
 
-        // Create a Mac instance and initialize it with the secret key
-        Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(signingKey);
-
-        // Compute the HMAC on the input message
-        byte[] rawHmac = mac.doFinal(message.getBytes(StandardCharsets.UTF_8));
-
-        // Encode to base64
-        return Base64.getEncoder().encodeToString(rawHmac);
-    }
-
-    public static void main(String[] args) {
-        try {
-            String secretKey = "your_secret_key";
-            String message = "{\"timestamp\":1617187200,\"authKey\":\"your_auth_key\"}"; // Replace with your actual JSON string
-
-            String signature = generateSignature(secretKey, message);
-            System.out.println("Signature: " + signature);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        /*
+         * String to be encrypted for signature
+         * {
+         *  "secret":"your_secret_key",
+         *  "timestamp":1731664580356
+         * }
+         */
+        String signStr = signContent.toString();
+        // Base64 encode to obtain the signature
+        String sign = Base64Utils.encodeToString(signStr.getBytes());
+        System.out.println(sign);
     }
 }
+
 ```
 
-Please replace "your_secret_key" and the message variable with your actual secret key and the JSON string. This example uses HMAC SHA256 for generating the signature. Ensure that the secret key and algorithm match those required by your API documentation.
+Please replace "your_secret_key" and the message variable with your actual secret key and the JSON string. This example uses Base64 encoding for generating the signature. Ensure that the secret key and algorithm match those required by your API documentation.
