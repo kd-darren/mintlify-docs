@@ -11,7 +11,7 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "ZephyrCard OpenAPI",
+        "tab": "OpenAPI",
         "groups": [
           {
             "group": "API Documentation",
