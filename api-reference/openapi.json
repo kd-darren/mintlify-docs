@@ -27,7 +27,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "type": "object",
+                "required": true,
+                "properties": {
+                  "sign": {
+                    "type": "string",
+                    "description": "Sign to be verified",
+                    "default": "your_sign"
+                  }
+                }
               }
             }
           },
@@ -39,17 +47,39 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "allOf": [
+                    {"$ref": "#/components/schemas/Success"},
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
           },
-          "500": {
+          "401": {
             "description": "unexpected error",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "allOf": [
+                    {"$ref": "#/components/schemas/Error"},
+                    {
+                      "properties": {
+                        "msg": {
+                          "default": "Invalid Authorization Sign"
+                        },
+                        "code": {
+                          "default": 401
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -228,6 +258,33 @@
           }
         ]
       },
+      "Success": {
+        "required": [
+          "msg",
+          "code",
+          "timestamp"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Error Code",
+            "default": 200
+          },
+          "msg": {
+            "type": "string",
+            "description": "Error Message Explanation",
+            "default": "Operation successful."
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Timestamp, the number of milliseconds since 1970",
+            "default": 1743994195329
+          }
+        }
+      },
       "Error": {
         "required": [
           "msg",
@@ -239,15 +296,19 @@
           "code": {
             "type": "integer",
             "format": "int32",
-            "description": "Error Code"
+            "description": "Error Code",
+            "default": 500
           },
           "msg": {
             "type": "string",
-            "description": "Error Message Explanation"
+            "description": "Error Message Explanation",
+            "default": "Operation failed."
           },
           "timestamp": {
-            "type": "long",
-            "description": "Timestamp, the number of milliseconds since 1970"
+            "type": "integer",
+            "format": "int64",
+            "description": "Timestamp, the number of milliseconds since 1970",
+            "default": 1743994195329
           }
         }
       }
