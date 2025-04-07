@@ -28,7 +28,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": true,
                 "properties": {
                   "sign": {
                     "type": "string",
