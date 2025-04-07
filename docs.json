@@ -24,6 +24,10 @@
             "pages": [
               "api-reference/endpoint/signature"
             ]
+          },
+          {
+            "group": "API Reference",
+            "openapi": "https://mmkadmin.kjds-ads.com/prod-api/v3/api-docs"
           }
         ]
       }
