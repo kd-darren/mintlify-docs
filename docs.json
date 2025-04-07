@@ -11,11 +11,11 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "API Documentation",
+        "tab": "Documentation",
         "pages": ["api-reference/introduction"]
       },
       {
-        "tab": "OpenAPI",
+        "tab": "REST API",
         "openapi": "https://mmkadmin.kjds-ads.com/prod-api/v3/api-docs"
       }
     ],
