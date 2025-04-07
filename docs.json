@@ -16,7 +16,7 @@
       },
       {
         "tab": "REST API",
-        "openapi": "https://mmkadmin.kjds-ads.com/prod-api/v3/api-docs"
+        "openapi": "https://gl-admin.zephyrcards.com/prod-api/v3/api-docs"
       }
     ],
     "global": {
