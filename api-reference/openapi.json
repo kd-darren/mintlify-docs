@@ -1,223 +1,99 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
-    "title": "标题：接口文档",
-    "description": "描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...",
-    "contact": {
-      "name": "creditcard"
+    "title": "OpenAPI Plant Store",
+    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "license": {
+      "name": "MIT"
     },
-    "version": "版本号:3.7.0"
+    "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "https://mmkadmin.kjds-ads.com:443",
-      "description": "Inferred Url"
+      "url": "http://sandbox.mintlify.com"
     }
   ],
-  "tags": [
+  "security": [
     {
-      "name": "test-controller",
-      "description": "Test Controller"
+      "bearerAuth": []
     }
   ],
   "paths": {
-    "/dev-api/test/user/list": {
-      "get": {
-        "tags": [
-          "test-controller"
-        ],
-        "summary": "获取用户列表",
-        "operationId": "userListUsingGET",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "Authorization": [
-              "global"
-            ]
-          }
-        ]
-      }
-    },
-    "/dev-api/test/user/save": {
+    "/sign/verify": {
       "post": {
-        "tags": [
-          "test-controller"
-        ],
-        "summary": "新增用户",
-        "operationId": "saveUsingPOST",
-        "parameters": [
-          {
-            "name": "mobile",
-            "in": "query",
-            "description": "用户手机",
-            "required": false,
-            "style": "form",
-            "allowReserved": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "用户密码",
-            "required": false,
-            "style": "form",
-            "allowReserved": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "用户id",
-            "required": false,
-            "style": "form",
-            "allowReserved": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "username",
-            "in": "query",
-            "description": "用户名称",
-            "required": false,
-            "style": "form",
-            "allowReserved": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          },
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "Authorization": [
-              "global"
-            ]
-          }
-        ]
-      }
-    },
-    "/dev-api/test/user/update": {
-      "put": {
-        "tags": [
-          "test-controller"
-        ],
-        "summary": "更新用户",
-        "operationId": "updateUsingPUT",
+        "description": "Verify that the signature is valid",
         "requestBody": {
+          "description": "Plant to add to the store",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserEntity"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
+                "type": "object",
+                "properties": {
+                  "sign": {
+                    "type": "string",
+                    "description": "Sign to be verified",
+                    "default": "your_sign"
                   }
                 }
               }
             }
           },
-          "201": {
-            "description": "Created"
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "plant response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {"$ref": "#/components/schemas/Success"},
+                    {
+                      "required": ["data"],
+                      "properties": {
+                        "data": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {"$ref": "#/components/schemas/Error"},
+                    {
+                      "properties": {
+                        "msg": {
+                          "default": "Invalid Authorization Sign"
+                        },
+                        "code": {
+                          "default": 401
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
           }
-        },
-        "security": [
-          {
-            "Authorization": [
-              "global"
-            ]
-          }
-        ]
+        }
       }
     },
-    "/dev-api/test/user/{userId}": {
+    "/plants": {
       "get": {
-        "tags": [
-          "test-controller"
-        ],
-        "summary": "获取用户详细",
-        "operationId": "getUserUsingGET",
+        "description": "Returns all plants from the system that the user has access to",
         "parameters": [
           {
-            "name": "userId",
-            "in": "path",
-            "description": "用户ID",
-            "required": true,
-            "style": "simple",
-            "allowReserved": false,
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -226,122 +102,220 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Plant response",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Plant"
                   }
                 }
               }
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
-        },
-        "security": [
-          {
-            "Authorization": [
-              "global"
-            ]
-          }
-        ]
+        }
       },
-      "delete": {
-        "tags": [
-          "test-controller"
-        ],
-        "summary": "删除用户信息",
-        "operationId": "deleteUsingDELETE",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "用户ID",
-            "required": true,
-            "style": "simple",
-            "allowReserved": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+      "post": {
+        "description": "Creates a new plant in the store",
+        "requestBody": {
+          "description": "Plant to add to the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPlant"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "plant response",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
-                  }
+                  "$ref": "#/components/schemas/Plant"
                 }
               }
             }
           },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plants/{id}": {
+      "delete": {
+        "description": "Deletes a single plant based on the ID supplied",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of plant to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
           "204": {
-            "description": "No Content"
+            "description": "Plant deleted",
+            "content": {}
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "webhooks": {
+    "/plant/webhook": {
+      "post": {
+        "description": "Information about a new plant added to the store",
+        "requestBody": {
+          "description": "Plant added to the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPlant"
+              }
+            }
           }
         },
-        "security": [
-          {
-            "Authorization": [
-              "global"
-            ]
+        "responses": {
+          "200": {
+            "description": "Return a 200 status to indicate that the data was received successfully"
           }
-        ]
+        }
       }
     }
   },
   "components": {
     "schemas": {
-      "UserEntity": {
-        "title": "UserEntity",
+      "Plant": {
+        "required": [
+          "name"
+        ],
         "type": "object",
         "properties": {
-          "mobile": {
-            "type": "string",
-            "description": "用户手机"
+          "name": {
+            "description": "The name of the plant",
+            "type": "string"
           },
-          "password": {
-            "type": "string",
-            "description": "用户密码"
-          },
-          "userId": {
-            "type": "integer",
-            "description": "用户ID",
-            "format": "int32"
-          },
-          "username": {
-            "type": "string",
-            "description": "用户名称"
+          "tag": {
+            "description": "Tag to specify the type",
+            "type": "string"
           }
-        },
-        "description": "用户实体"
+        }
+      },
+      "NewPlant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Plant"
+          },
+          {
+            "required": [
+              "id"
+            ],
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Identification number of the plant",
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ]
+      },
+      "Success": {
+        "required": [
+          "msg",
+          "code",
+          "timestamp"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Error Code",
+            "default": 200
+          },
+          "msg": {
+            "type": "string",
+            "description": "Error Message Explanation",
+            "default": "Operation successful."
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Timestamp, the number of milliseconds since 1970",
+            "default": 1743994195329
+          }
+        }
+      },
+      "Error": {
+        "required": [
+          "msg",
+          "code",
+          "timestamp"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Error Code",
+            "default": 500
+          },
+          "msg": {
+            "type": "string",
+            "description": "Error Message Explanation",
+            "default": "Operation failed."
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Timestamp, the number of milliseconds since 1970",
+            "default": 1743994195329
+          }
+        }
       }
     },
     "securitySchemes": {
-      "Authorization": {
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header"
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   }
