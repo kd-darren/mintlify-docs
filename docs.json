@@ -9,16 +9,13 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    
-    "anchors": [
+    "tabs": [
       {
-        "anchor": "Documentation",
-        "icon": "book-open",
+        "tab": "Authentication",
         "pages": ["api-reference/introduction"]
       },
       {
-        "anchor": "API References",
-        "icon": "sqaure-terminal",
+        "tab": "API Reference",
         "openapi": "https://dev-sandbox-v423.zephyrcards.com/v3/api-docs"
       }
     ]
