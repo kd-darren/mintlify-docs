@@ -9,24 +9,19 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "tabs": [
+    
+    "anchors": [
       {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "Authentication",
-            "pages": ["api-reference/introduction"]
-          },
-          {
-            "group": "API Reference",
-            "openapi": "https://dev-sandbox-v423.zephyrcards.com/v3/api-docs"
-          }
-        ]
+        "anchor": "Documentation",
+        "icon": "book-open",
+        "pages": ["api-reference/introduction"]
+      },
+      {
+        "anchor": "API References",
+        "icon": "sqaure-terminal",
+        "openapi": "https://dev-sandbox-v423.zephyrcards.com/v3/api-docs"
       }
-    ],
-    "global": {
-      "anchors": []
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.png",
