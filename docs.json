@@ -16,7 +16,7 @@
       },
       {
         "tab": "REST API",
-        "openapi": "https://dev-sandbox-v423.zephyrcards.com/api-docs"
+        "openapi": "https://dev-sandbox-v423.zephyrcards.com/v3/api-docs"
       }
     ],
     "global": {
