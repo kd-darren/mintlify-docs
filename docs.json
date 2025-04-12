@@ -11,12 +11,17 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Authentication",
-        "pages": ["api-reference/introduction"]
-      },
-      {
         "tab": "API Reference",
-        "openapi": "https://dev-sandbox-v423.zephyrcards.com/v3/api-docs"
+        "groups": [
+          {
+            "group": "Authentication",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "API Reference",
+            "openapi": "https://dev-sandbox-v423.zephyrcards.com/v3/api-docs"
+          }
+        ]
       }
     ],
     "global": {
