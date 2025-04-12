@@ -1,0 +1,32 @@
+---
+title: 'Card Transaction Push'
+description: 'You need to first contact your account manager to set up the card transaction record push address, after which the platform will push real-time card transaction records to your transaction record receiving address.'
+---
+
+### Matters needing attention
+- The push wait time for a response is 30 seconds; please note the business processing time.
+- Upon successful receipt of the message, please return the string "success". If the response string is not "success", the system will consider the send operation as failed and will continuously re-send the notification until it has retried more than 3 times (the retry interval typically is: 2 minutes, 4 minutes, 6 minutes).
+
+### Request Method
+- Provide an interface that accepts a post request with JSON in a free format.
+- It is recommended to use the HTTPS protocol.
+
+### Example of Push Data Format
+``` json
+{
+  "amount": 20,
+  "billNo": "******",
+  "cardId": "CA231201******",
+  "cardNo": "467413******1362",
+  "currency": "USD",
+  "fee": 0,
+  "merchant": "BASE",
+  "orderAmount": 20,
+  "orderCurrency": "USD",
+  "result": "SUCCEEDED",
+  "transactionTime": "2023-12-03 09:42:49",
+  "txnStatus": "SUCCESS",
+  "txnType": "TOPUP",
+  "type": "INCREASE"
+}
+```

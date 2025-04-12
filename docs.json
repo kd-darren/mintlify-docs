@@ -17,6 +17,10 @@
       {
         "tab": "API Reference",
         "openapi": "https://dev-sandbox-v423.zephyrcards.com/v3/api-docs"
+      },
+      {
+        "tab": "Card Transaction Push",
+        "pages": ["bill-push"]
       }
     ]
   },
