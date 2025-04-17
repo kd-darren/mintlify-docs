@@ -5,37 +5,38 @@ description: "Explanation of Data Status or Type Dictionary"
 
 ### Card Used Scenes Type
 
-Applicable API interfaces include: Card product list,Card List,Card Order,Card Order Information,Card Order Record.
-
-| status | Description |
-| :----: | :---------- |
-| 100        | Supports ad account funding & payments for cross-border platforms (Facebook, Google, TikTok, etc.) |
-| 101        | Cross-border e-commerce payments, flight bookings, hotel reservations, and more                    |
-| 102        | Membership renewals, API services, cloud platforms, and automated billing                          |
-| 103        | Apple Pay Dedicated Cards                                                                          |
+| status | Description                                                                                        |
+|:------:|----------------------------------------------------------------------------------------------------|
+|   100  | Supports ad account funding & payments for cross-border platforms (Facebook, Google, TikTok, etc.) |
+|   101  | Cross-border e-commerce payments, flight bookings, hotel reservations, and more                    |
+|   102  | Membership renewals, API services, cloud platforms, and automated billing                          |
+|   103  | Apple Pay Dedicated Cards                                                                          |
+|   40   | Completed                                                                                          |
+|   99   | Cancelled                                                                                          |
 
 ### Card Order Status
 
-| status | Description |
-| :----: | :---------- |
-| 00 | Pending Payment |
-| 10 | Card Production in Progress |
-| 20 | Card Issuance Ongoing |
-| 30 | Pending Confirmation |
-| 40 | Completed |
-| 99 | Cancelled |
+| status | Description                 |
+|:------:|-----------------------------|
+|   00   | Pending Payment             |
+|   10   | Card Production in Progress |
+|   20   | Card Issuance Ongoing       |
+|   30   | Pending Confirmation        |
+|   40   | Completed                   |
+|   99   | Cancelled                   |
 
 ### Card Status
 
 | status | Description |
-| :----: | :---------- |
-| 0 | Active |
-| 1 | Frozen |
-| 2 | Closed |
-| 3 | Closing |
-| 4 | Blocked |
+|:------:|-------------|
+|    0   | Active      |
+|    1   | Frozen      |
+|    2   | Closed      |
+|    3   | Closing     |
+|    4   | Blocked     |
 
 ### Card Recharge Order Status
+
 | status | Description        |
 |:------:|--------------------|
 |    0   | Pending            |
@@ -43,3 +44,24 @@ Applicable API interfaces include: Card product list,Card List,Card Order,Card O
 |    2   | Request Successful |
 |    3   | Failed             |
 |    4   | Cancelled          |
+
+### Card Transaction Type
+
+|    txnType   | Description               |
+|:------------:|---------------------------|
+| AUTH         | Transaction Authorization |
+| CREATE_CARD  | Card Activation           |
+| REVERSAL     | Authorization Reversal    |
+| TOPUP        | Top-up                    |
+| CARD_CANCEL  | Card Closure              |
+| CLEARING     | Transaction Settlement    |
+| RETURN       | Refund                    |
+| REFUND       | Refund                    |
+| SETTLED      | Transaction Settlement    |
+| CARD_DESTROY | Card Closure              |
+| AUTHG        | Transaction Fee           |
+| RETURNC      | FX Difference Refund      |
+| AUTHC        | FX Difference Adjustment  |
+| AUTHD        | Declined Transaction Fee  |
+| AUTHE        | Micro-transaction Fee     |
+| AUTHF        | Cross-border/FX Fee       |
