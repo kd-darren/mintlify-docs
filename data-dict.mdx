@@ -48,7 +48,7 @@ description: "Explanation of Data Status or Type Dictionary"
 ### Card Transaction Type
 
 |    txnType   | Description               |
-|:------------:|---------------------------|
+| ------------ |---------------------------|
 | AUTH         | Transaction Authorization |
 | CREATE_CARD  | Card Activation           |
 | REVERSAL     | Authorization Reversal    |
@@ -65,3 +65,15 @@ description: "Explanation of Data Status or Type Dictionary"
 | AUTHD        | Declined Transaction Fee  |
 | AUTHE        | Micro-transaction Fee     |
 | AUTHF        | Cross-border/FX Fee       |
+
+### Wallet Transaction Record BizType
+
+| bizType                         | Description               |
+|---------------------------------|---------------------------|
+| product_wallet_recharge_payment | Wallet Top-up             |
+| card_account_order              | Card Application          |
+| card_order_refund               | Card Cancellation Refund  |
+| card_recharge_payment           | Card Top-up               |
+| card_recharge_fail_refund       | Failed Card Top-up Refund |
+| card_cancel_refund              | Card Closure              |
+| card_seized                     | Card Blocking             |
