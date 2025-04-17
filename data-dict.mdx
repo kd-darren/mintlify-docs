@@ -16,11 +16,11 @@ Applicable API interfaces include: Card product list,Card List,Card Order,Card O
 
 ### Card Order Status
 
-```
-| usedScenes | Description                         |
+| status     | Description                         |
 | ---------- | ----------------------------------- |
-| 100 | Supports ad account funding & payments for cross-border platforms (Facebook, Google, TikTok, etc.) |
-| 101 | Cross-border e-commerce payments, flight bookings, hotel reservations, and more |
-| 102 | Membership renewals, API services, cloud platforms, and automated billing |
-| 103 | Apple Pay Dedicated Cards |
-```
+| 00 | Pending Payment |
+| 10 | Card Production in Progress |
+| 20 | Card Issuance Ongoing |
+| 30 | Pending Confirmation |
+| 40 | Completed |
+| 99 | Cancelled |
